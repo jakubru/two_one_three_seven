@@ -4,8 +4,9 @@
 <body>
 <h1>2137 GAME</h1>
 <div>
-    <form method="post" action="/nick">
-        <p>NICK: <input type="text" value="login" id="log1"></p>
+    <form method="post" action="/play">
+        <p>NICK: <input type="text" name="nick" id="nick1"/></p>
+        <p><input type="submit" value="OK"/></p>
     </form>
 </div>
 </body>
