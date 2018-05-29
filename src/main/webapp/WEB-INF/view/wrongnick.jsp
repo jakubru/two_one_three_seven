@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head><title>2137 GAME</title></head>
+<head><title>GAME</title></head>
 <body>
-<h1>2137 GAME</h1>
-<div><p>Niestety papieski wojowniku ${nick} jest już w użyciu przez innego papieskiego wojownika.</p></div>
-<div><%=java.util.Calendar.getInstance()%></div>
+<h1>GAME</h1>
+<div><p>Niestety ${nick} jest zajety </p></div>
 </body>
 </html>

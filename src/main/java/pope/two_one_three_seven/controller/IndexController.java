@@ -16,12 +16,11 @@ public class IndexController {
         return "index";
     }
 
-    ListOfPlayers mListOfPlayers;
 
     @RequestMapping(value = "/play", method = RequestMethod.POST)
     public String addPlayer(@RequestParam("nick") String nick, Map<String,Object> model){
         model.put("nick", nick);
-        if(mListOfPlayers.getInstance().addPlayer(nick))
+        if(ListOfPlayers.getInstance().addPlayer(nick))
             return "game";
         else
             return "wrongnick";
