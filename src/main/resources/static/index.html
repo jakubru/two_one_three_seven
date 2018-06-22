@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <title>2137</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/jquery-ui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<div id="app">
+    <nav>
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a href class="logoutButton" onclick="logout()">Logout</a></li>
+        </ul>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo"><img src="http://alexjones.pl/media/k2/items/cache/d9825d27bb75dc7e565ea2bf8a02f095_XL.jpg"/>2137</a>
+            <a href="#" data-activates="mobile-demo" class="right button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul v-cloak id="nav-mobile" class="right hide-on-med-and-down">
+                <li th:inline="text">
+                    <a class="dropdown-button" data-beloworigin="true" href="#" data-activates="dropdown1">
+                        <img class="avatar" :src=user.picture />
+                        <span>{{user.name}}</span>
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                </li>
+            </ul>
+            <ul v-cloak class="side-nav" id="mobile-demo">
+                <li><a><img class="avatar" :src=user.picture /><span>{{user.name}}</span></a></li>
+                <li><a href class="logoutButton" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="main" v-cloak class="container">
+        <div class = "row">
+            <div class = "col s12">
+                <ul class = "tabs">
+                    <li class = "tab col"><a class = "active" href = "#home">Homepage</a></li>
+                    <li class = "tab col"><a id="profileTab" href = "#profile">Profile</a></li>
+                    <li class = "tab col"><a id="playTab" href = "#play">Play Game</a></li>
+                    <li class = "tab col"><a href class="logoutButton" onclick="logout()">Logout</a></li>
+                </ul>
+            </div>
+
+            <div id="home" class = "col s12">
+                <div id="status" class="col">
+                    <img src="http://alexjones.pl/media/k2/items/cache/d9825d27bb75dc7e565ea2bf8a02f095_XL.jpg"/>
+                </div>
+                <div id="prog-desc" class="col">
+                    <h4>Simple 2137 Game!</h4>
+                </div>
+
+            </div>
+            <div id="profile" class="col s12 active" style="">
+                <div class="col s4 l3">
+                    <img class="avatar" :src=user.picture style="width: 100%;"/>
+                </div>
+                <form id="profileForm" class="col s8 l9">
+                    <div class="row">
+                        <input type="hidden" name="userId" v-model="user.userId"/>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input class="validate" id="name" name="name" type="text" :value="user.hasPersonalData?user.name:''"/>
+                            <label for="name" :class="user.hasPersonalData?'active':''">Name</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">location_city</i>
+                            <input class="validate" id="address" name="address" type="text" :value="user.address"/>
+                            <label for="address" :class="user.address?'active':''">Address</label>
+                        </div>
+                        <button class="btn waves-effect waves-light right" type="submit">Save
+                            <i class="material-icons right">send</i>
+                        </button>
+                        <button class="btn waves-effect waves-light red right" id="resetPass">Reset password
+                            <i class="material-icons right">lock_open</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div id="play" class="col s12 active" style="">
+                <div>
+                    <h4>-->Game goes here<--</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loading"><div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div><div class="gap-patch">
+            <div class="circle"></div>
+        </div><div class="circle-clipper right">
+            <div class="circle"></div>
+        </div>
+        </div>
+    </div></div>
+</div>
+<script type="text/javascript" src="js/lib/lock.min.js"></script>
+<script type="text/javascript" src="js/lib/moment.min.js"></script>
+<script type="text/javascript" src="js/lib/vue.min.js"></script>
+<script type="text/javascript" src="js/lib/vue-resource.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/lib/materialize.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

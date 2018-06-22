@@ -9,7 +9,7 @@ public class ListOfPlayers {
 
 
     private ListOfPlayers(){
-        mListOfPlayers = new LinkedList<>();
+        mListOfPlayers = new LinkedList<Player>();
     }
 
     public static ListOfPlayers getInstance(){
