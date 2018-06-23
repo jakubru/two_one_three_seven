@@ -3,6 +3,7 @@ package pope.two_one_three_seven.model;
 public class Player {
     String mNick;
     boolean mIsActive;
+    int pointID;
 
 
     Player(String nick){
@@ -25,5 +26,13 @@ public class Player {
 
     public String getNick(){
         return mNick;
+    }
+
+    public int getPointID(){
+        return this.pointID;
+    }
+
+    public void setPointID(int pointID){
+        this.pointID = pointID;
     }
 }
