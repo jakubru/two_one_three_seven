@@ -19,6 +19,11 @@ body {
 #profile .user-field{
     font-size: x-large;
 }
+#play .preloader-wrapper {
+    display: none;
+    width: 400px;
+    height: 400px;
+}
 #main {
     padding-top: 70px;
 }

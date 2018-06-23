@@ -35,9 +35,9 @@
             </ul>
         </div>
     </nav>
-    <div id="main" v-cloak class="container">
+    <div id="main" v-cloak class="container" >
         <div class = "row">
-            <div class = "col s12">
+            <div class = "col s12" id="game-menu">
                 <ul class = "tabs">
                     <li class = "tab col"><a class = "active" href = "#home">Homepage</a></li>
                     <li class = "tab col"><a id="profileTab" href = "#profile">Profile</a></li>
@@ -77,8 +77,22 @@
                 </div>
             </div>
             <div id="play" class="col s12 active" style="">
-                <div>
-                    <h4>-->Game goes here<--</h4>
+                <div align="center">
+                    <div class="preloader-wrapper big active" id="game-loader" >
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button class="btn waves-effect waves-light" type="button" onclick="play()">Play
+                        <i class="material-icons right">send</i>
+                    </button>
                 </div>
             </div>
         </div>

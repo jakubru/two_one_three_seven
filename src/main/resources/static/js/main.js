@@ -93,5 +93,19 @@ function logout () {
     localStorage.removeItem( 'profile' );
 }
 
+function play () {
+    var loader = document.getElementById("game-loader");
+    var gameMenu = document.getElementById("game-menu");
+    if ( loader.style.display === "block") {
+        loader.style.display = "none";
+    } else {
+        loader.style.display = "block";
+    }
+    if ( gameMenu.style.display === "none") {
+        gameMenu.style.display = "block";
+    } else {
+        gameMenu.style.display = "none";
+    }
+}
 $(".button-collapse").sideNav();
 
