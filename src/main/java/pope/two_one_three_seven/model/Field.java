@@ -1,21 +1,22 @@
 package pope.two_one_three_seven.model;
 
+import java.util.List;
+
 public class Field {
-    int something;
-    private Field(int n){
-        this.something = n;
+
+    Circle circle;
+    List<Line> lines;
+
+    public Field(Circle circle, List<Line> lines){
+        this.circle = circle;
+        this.lines = lines;
     }
 
-    public int getSomething(){
-        return this.something;
+    public Circle getCircle(){
+        return this.circle;
     }
 
-    private static Field mField;
-
-    public static Field getInstance(){
-        if(mField == null){
-            mField = new Field(5);
-        }
-        return mField;
+    public List<Line> getLines(){
+        return this.lines;
     }
 }
