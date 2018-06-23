@@ -15,10 +15,11 @@ application = new Vue({
     el: '#app',
     data: {
         user: {
-            name:'', picture:''
-        },
-        tickets: '',
-        statusData: {}
+            id:'',
+            email:'',
+            name:'',
+            picture:'',
+        }
     }
 });
 
@@ -26,8 +27,8 @@ href = window.location.href;
 token = href.substring(href.indexOf("=")+1,href.indexOf("&"));
 
 var lock = new Auth0Lock(
-    '3a0iMYzlXuCq5uQJJdAjKekCdF_dWfZe',
-    'frequent-flyer.eu.auth0.com',
+    '8neJIfOnnW5261ekwznGbvb65r9Zd7PR',
+    'two-one-three-seven.eu.auth0.com',
     {
         closable: false,
         languageDictionary: {
@@ -35,13 +36,14 @@ var lock = new Auth0Lock(
         },
         theme: {
             logo: 'http://alexjones.pl/media/k2/items/cache/d9825d27bb75dc7e565ea2bf8a02f095_XL.jpg',
-            primaryColor: '#FF6262'
+            primaryColor: '#86ff67'
         }
     }
 );
 
 getUserData = function(profile) {
     application.user = {
+        id: profile.sub,
         email: profile.email,
         picture: profile.picture,
         name: profile.name
@@ -52,11 +54,9 @@ getUserData = function(profile) {
     }
 };
 
-// Listening for the authenticated event
 lock.on("authenticated", function(authResult) {
     lock.getUserInfo(authResult.accessToken, function(error, profile) {
         if (error) {
-            // Handle error
             return;
         }
 

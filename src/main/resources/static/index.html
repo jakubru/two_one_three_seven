@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>2137</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -59,27 +59,22 @@
                 <div class="col s4 l3">
                     <img class="avatar" :src=user.picture style="width: 100%;"/>
                 </div>
-                <form id="profileForm" class="col s8 l9">
+                <div id="profileForm" class="col s8 l9">
                     <div class="row">
-                        <input type="hidden" name="userId" v-model="user.userId"/>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">account_circle</i>
-                            <input class="validate" id="name" name="name" type="text" :value="user.hasPersonalData?user.name:''"/>
-                            <label for="name" :class="user.hasPersonalData?'active':''">Name</label>
+                        <div class="table-of-contents">
+                            <div><i class="material-icons prefix">account_circle</i></div>
+                            <div><a class="user-field" >Id: {{user.id}}</a></div>
                         </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">location_city</i>
-                            <input class="validate" id="address" name="address" type="text" :value="user.address"/>
-                            <label for="address" :class="user.address?'active':''">Address</label>
+                        <div class="table-of-contents">
+                            <div><i class="material-icons prefix">account_circle</i></div>
+                            <div><a class="user-field">Name: {{user.name}}</a></div>
                         </div>
-                        <button class="btn waves-effect waves-light right" type="submit">Save
-                            <i class="material-icons right">send</i>
-                        </button>
-                        <button class="btn waves-effect waves-light red right" id="resetPass">Reset password
-                            <i class="material-icons right">lock_open</i>
-                        </button>
+                        <div class="table-of-contents">
+                            <div><i class="material-icons prefix">account_circle</i></div>
+                            <div><a class="user-field">Email: {{user.email}}</a></div>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div id="play" class="col s12 active" style="">
                 <div>
