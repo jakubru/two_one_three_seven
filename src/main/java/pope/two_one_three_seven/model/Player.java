@@ -4,24 +4,22 @@ public class Player {
     String mNick;
     boolean mIsActive;
 
+
     Player(String nick){
         this.mNick = nick;
-        mIsActive = true;
-    }
-
-    void deactivate(){
         mIsActive = false;
     }
 
-    void activate(){
+    public void deactivate(){
+        mIsActive = false;
+    }
+
+    public void activate(){
         mIsActive = true;
     }
 
-    void changeNick(String nick){
-        mNick = nick;
-    }
 
-    boolean isActive(){
+    public boolean isActive(){
         return mIsActive;
     }
 
