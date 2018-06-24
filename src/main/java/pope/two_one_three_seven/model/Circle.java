@@ -3,9 +3,9 @@ package pope.two_one_three_seven.model;
 public class Circle {
 
     Point mid;
-    int radius;
+    double radius;
 
-    public Circle(Point p, int k){
+    public Circle(Point p, double k){
         this.mid = p;
         this.radius = k;
     }
@@ -14,7 +14,7 @@ public class Circle {
         return this.mid;
     }
 
-    public int getRadius(){
+    public double getRadius(){
         return this.radius;
     }
 

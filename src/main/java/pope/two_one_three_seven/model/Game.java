@@ -2,10 +2,14 @@ package pope.two_one_three_seven.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static java.lang.Math.PI;
 
 public class Game {
     List<Player> mListOfPlayers;
     Field mField;
+    int crrPointId = 0;
 
     public Field getField(){
         return this.mField;
@@ -53,6 +57,14 @@ public class Game {
     }
 
     private void generateField(){
+        Circle c = generateCircle();
+        mField = new Field(c);
+        mField.addLine(generateXLine());
+        Line lineY = generateYLine();
+        mField.addLine(lineY);
+        updateCrossingLines(lineY);
+
+
         Point p1 = new Point(1,1,1,true);
         Point p2 = new Point(2,1,2,false);
         Point p3 = new Point(3,1,3,true);
@@ -77,9 +89,10 @@ public class Game {
         lines.add(l1);
         lines.add(l2);
         lines.add(l3);
-        Circle c = new Circle(p1,7);
+
         this.mField = new Field(c,lines);
         /*W tej funkcji wszystko ustawiane, razem z początkowymi punktami graczy*/
+        // chosing the line and its on-circle-point for each player randomly
     }
 
     private boolean checkNeighbours(int ID){
@@ -105,5 +118,44 @@ public class Game {
             return true;
         }
         return false;
+    }
+
+    public Circle generateCircle() {
+        Point centralPoint = new Point(0.0, 0.0, this.crrPointId++, false);
+        return new Circle(centralPoint, 1.0);
+    }
+
+    public Line generateXLine() {
+        Point p1 = new Point(-1.0, 0.0, crrPointId++, true);
+        Point p2 = new Point(1.0, 0.0, crrPointId++, true);
+        Line line = new Line();
+        line.addPoint(p1);
+        line.addPoint(p2);
+        return line;
+    }
+
+    public Line generateYLine() {
+        Point p1 = new Point(0.0, -1.0, crrPointId++, true);
+        Point p2 = new Point(0.0, 1.0, crrPointId++, true);
+        Line line = new Line();
+        line.addPoint(p1);
+        line.addPoint(p2);
+        return line;
+    }
+
+    public Line generateRandomLine() {
+        Random rand = new Random();
+        double rand1 = 2.0 * PI * rand.nextDouble();
+        double rand2 = 2.0 * PI * rand.nextDouble();
+        Point p1 = new Point(Math.cos(rand1), Math.sin(rand1), crrPointId++, true);
+        Point p2 = new Point(Math.cos(rand2), Math.sin(rand2), crrPointId++, true);
+        Line line = new Line();
+        line.addPoint(p1);
+        line.addPoint(p2);
+        return line;
+    }
+
+    public void updateCrossingLines(Line line) {
+
     }
 }
