@@ -64,33 +64,15 @@ public class Game {
         mField.addLine(lineY);
         updateCrossingLines(lineY);
 
+        for (int i = 0; i < 100; ++i) {
+            Line randLine = generateRandomLine();
+            updateCrossingLines(randLine);
+            mField.addLine(randLine);
+        }
 
-        Point p1 = new Point(1,1,1,true);
-        Point p2 = new Point(2,1,2,false);
-        Point p3 = new Point(3,1,3,true);
-        Point p4 = new Point(4,1,4,true);
-        Point p5 = new Point(5,1,5,true);
-        Point p6 = new Point(6,1,6,true);
-        Point p7 = new Point(8,1,7,false);
-        List<Point> points1 = new ArrayList<Point>();
-        points1.add(p1);
-        points1.add(p2);
-        points1.add(p3);
-        List<Point> points2 = new ArrayList<Point>();
-        points2.add(p4);
-        points2.add(p5);
-        List<Point> points3 = new ArrayList<Point>();
-        points3.add(p6);
-        points3.add(p7);
-        Line l1 = new Line(points1);
-        Line l2 = new Line(points2);
-        Line l3 = new Line(points3);
-        List<Line> lines = new ArrayList<Line>();
-        lines.add(l1);
-        lines.add(l2);
-        lines.add(l3);
-
-        this.mField = new Field(c,lines);
+        for (Player player : mListOfPlayers) {
+            player.setPointID(getRandomPointOnCircle().getID());
+        }
         /*W tej funkcji wszystko ustawiane, razem z początkowymi punktami graczy*/
         // chosing the line and its on-circle-point for each player randomly
     }
@@ -155,7 +137,55 @@ public class Game {
         return line;
     }
 
-    public void updateCrossingLines(Line line) {
+    public Point getCrossingPoint(Line l1, Line l2) {
+        List<Point> pointsL1 = l1.getPointList();
+        List<Point> pointsL2 = l2.getPointList();
+        double xL1 = pointsL1.get(0).getX();
+        double yL1 = pointsL1.get(0).getY();
+        double dxL1 = pointsL1.get(pointsL1.size() - 1).getX() - pointsL1.get(0).getX();
+        double dyL1 = pointsL1.get(pointsL1.size() - 1).getY() - pointsL1.get(0).getY();
 
+        double xL2 = pointsL2.get(0).getX();
+        double yL2 = pointsL2.get(0).getY();
+        double dxL2 = pointsL2.get(pointsL2.size() - 1).getX() - pointsL2.get(0).getX();
+        double dyL2 = pointsL2.get(pointsL2.size() - 1).getY() - pointsL2.get(0).getY();
+
+        double tDenom = dxL1 * dyL2 - dyL1 * dxL2;
+        if (tDenom != 0.0) {
+            double dxL1L2 = xL2 - xL1;
+            double dyL1L2 = yL2 - yL1;
+            double t = (dxL1L2 * dyL2 - dyL1L2 * dxL2) / tDenom;
+            double xP = xL1 + t * dxL1;
+            double yP = yL1 + t * dyL1;
+            return new Point(xP, yP, crrPointId++, false);
+        } else {
+            return null;
+        }
+    }
+
+    public boolean isPointInCircle(Point point) {
+        return Math.sqrt(point.getX() * point.getX() + point.getY() * point.getY()) < 1.0;
+    }
+
+    public void updateCrossingLines(Line line) {
+        for (Line l2 : mField.getLines()) {
+            Point crossingPoint = getCrossingPoint(line, l2);
+            if (crossingPoint != null && isPointInCircle(crossingPoint)) {
+                line.addPoint(crossingPoint);
+                l2.addPoint(crossingPoint);
+                line.sortPoints();
+                l2.sortPoints();
+            }
+        }
+    }
+
+    public Point getRandomPointOnCircle() {
+        Random rand = new Random();
+        int linesNum = mField.getLines().size();
+        Line randLine = mField.getLines().get(rand.nextInt(linesNum));
+        int sideNum = rand.nextInt(2);
+        List<Point> pointsList = randLine.getPointList();
+        if (sideNum == 0) return pointsList.get(0);
+        else return pointsList.get(pointsList.size() - 1);
     }
 }
