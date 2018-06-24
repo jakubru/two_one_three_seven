@@ -1,5 +1,7 @@
 package pope.two_one_three_seven.model;
 
+import static java.lang.Math.round;
+
 public class Circle {
 
     Point mid;
@@ -18,6 +20,7 @@ public class Circle {
         return this.radius;
     }
 
-
-
+    public int scaledR(int scale) {
+        return (int) round(radius * (double) scale);
+    }
 }

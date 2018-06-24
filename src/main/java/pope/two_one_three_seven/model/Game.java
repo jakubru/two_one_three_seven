@@ -31,7 +31,9 @@ public class Game {
                 return false;
         }
         if (mListOfPlayers.size() < 3) {
-            mListOfPlayers.add(new Player(nick));
+            Player player = new Player(nick);
+            mListOfPlayers.add(player);
+            player.setPoint(getRandomPointOnCircle());
             if (getSize() == 1) {
                 mListOfPlayers.get(0).activate();
             }
@@ -75,9 +77,9 @@ public class Game {
             mField.addLine(randLine);
         }
 
-        for (Player player : mListOfPlayers) {
+        /*for (Player player : mListOfPlayers) {
             player.setPoint(getRandomPointOnCircle());
-        }
+        }*/
         /*W tej funkcji wszystko ustawiane, razem z początkowymi punktami graczy*/
         // chosing the line and its on-circle-point for each player randomly
     }
