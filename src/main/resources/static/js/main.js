@@ -113,7 +113,7 @@ function play () {
                 gameMenu.style.display = "none";
             }
             startGame();
-            getField();
+            //getField();
     }
     else{
         alert("nie ok");
@@ -157,7 +157,20 @@ function getField(){
 }
 
 function drawField(field){
-    drawCircle(100,100,100);
+    drawCircle(field.circle.mid.x,field.circle.mid.y,field.circle.radius);
+    for(line in field.lines){
+        p1 = -1;
+        p2 = -1;
+        for(point in lines.pointList){
+            if(point.onCircle === "true" && p1 === -1){
+                p1 = point
+            }
+            else if(point.onCircle === "true"){
+                p2 = point
+            }
+        }
+        drawLine(p1.x, p1.y,p2.x,p2.y);
+    }
 }
 
 function drawLine(x1,y1,x2,y2){
