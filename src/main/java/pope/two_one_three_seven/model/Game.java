@@ -61,6 +61,7 @@ public class Game {
     }
 
     public void generateField(int numOfLines) {
+        // the circle center point Id = -1
         Circle c = generateCircle();
         mField = new Field(c);
         mField.addLine(generateXLine());
@@ -126,7 +127,7 @@ public class Game {
     }
 
     public Circle generateCircle() {
-        Point centralPoint = new Point(0.0, 0.0, this.crrPointId++, false);
+        Point centralPoint = new Point(0.0, 0.0, -1, false);
         return new Circle(centralPoint, 1.0);
     }
 
