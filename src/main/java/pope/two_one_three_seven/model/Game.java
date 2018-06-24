@@ -17,12 +17,12 @@ public class Game {
 
     public Game() {
         this.mListOfPlayers = new ArrayList<Player>();
-        generateField(100);
+        //generateField(100);
     }
 
     public Game(int numOfLines) {
         this.mListOfPlayers = new ArrayList<Player>();
-        generateField(numOfLines);
+        //generateField(numOfLines);
     }
 
     public boolean addPlayer(String nick) {
@@ -60,7 +60,7 @@ public class Game {
         return null;
     }
 
-    private void generateField(int numOfLines) {
+    public void generateField(int numOfLines) {
         Circle c = generateCircle();
         mField = new Field(c);
         mField.addLine(generateXLine());

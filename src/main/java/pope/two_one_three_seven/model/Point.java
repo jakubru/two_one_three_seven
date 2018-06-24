@@ -3,6 +3,8 @@ package pope.two_one_three_seven.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.round;
+
 public class Point {
 
     double x;
@@ -41,6 +43,16 @@ public class Point {
 
     public void addLineContaingPoint(Line line) {
         linesContaingPoint.add(line);
+    }
+
+    public int getScaledShiftedX(int scale, int xShift) {
+        long scaledX = round(x * (double) scale);
+        return (int) (scaledX + xShift);
+    }
+
+    public int getScaledShiftedY(int scale, int yShift) {
+        long scaledY = round(y * (double) scale);
+        return (int) (scaledY + yShift);
     }
 
 }

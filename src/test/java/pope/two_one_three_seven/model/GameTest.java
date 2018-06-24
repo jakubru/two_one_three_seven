@@ -23,7 +23,7 @@ public class GameTest {
         // X and Y lines
         Line lineX = game.generateXLine();
         Line lineY = game.generateYLine();
-        Point point = game.getCrossingPoint(lineX, lineY);
+        Point point = game.getCrossingPointInCircle(lineX, lineY);
         Assert.assertTrue(point.getX() == 0.0 && point.getY() == 0.0);
         // lines with starting in the same point
         Line line1 = new Line();
@@ -40,7 +40,7 @@ public class GameTest {
         line2.addPoint(p3);
         line2.sortPoints();
 
-        Point pointP = game.getCrossingPoint(line1, line2);
+        Point pointP = game.getCrossingPointInCircle(line1, line2);
         Assert.assertTrue(pointP.getX() == 2.0 && pointP.getY() == 3.0);
         // parallel lines
         Point pp1 = new Point(0.0, 3.0, 0, false);
@@ -52,8 +52,28 @@ public class GameTest {
         parallel2.addPoint(pp2);
         parallel2.sortPoints();
 
-        Point parallelCross = game.getCrossingPoint(parallel1, parallel2);
+        Point parallelCross = game.getCrossingPointInCircle(parallel1, parallel2);
 
         Assert.assertNull(parallelCross);
+    }
+
+    @org.junit.Test
+    public void generateFieldTest() {
+        Game game = new Game();
+        game.addPlayer("adam");
+        game.addPlayer("ewa");
+        game.addPlayer("kuku");
+        game.generateField(10);
+        for (Line l: game.getField().getLines()) {
+            System.out.println("Line:");
+            l.printPoints();
+        }
+        System.out.println();
+        for (Player p : game.mListOfPlayers) {
+            System.out.println("Player: " + p.getNick() + " stands on: "
+                    + p.getPoint().getX() + "; " + p.getPoint().getY() + " at the distance from the center: "
+                    + Math.sqrt(p.getPoint().getX() * p.getPoint().getX()
+                    + p.getPoint().getY() * p.getPoint().getY()));
+        }
     }
 }
