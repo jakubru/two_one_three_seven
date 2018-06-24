@@ -17,7 +17,12 @@ public class Game {
 
     public Game() {
         this.mListOfPlayers = new ArrayList<Player>();
-        generateField();
+        generateField(100);
+    }
+
+    public Game(int numOfLines) {
+        this.mListOfPlayers = new ArrayList<Player>();
+        generateField(numOfLines);
     }
 
     public boolean addPlayer(String nick) {
@@ -55,7 +60,7 @@ public class Game {
         return null;
     }
 
-    private void generateField() {
+    private void generateField(int numOfLines) {
         Circle c = generateCircle();
         mField = new Field(c);
         mField.addLine(generateXLine());
@@ -63,7 +68,7 @@ public class Game {
         mField.addLine(lineY);
         updateCrossingLines(lineY);
 
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < numOfLines; ++i) {
             Line randLine = generateRandomLine();
             updateCrossingLines(randLine);
             mField.addLine(randLine);
@@ -161,7 +166,7 @@ public class Game {
         return line;
     }
 
-    public Point getCrossingPoint(Line l1, Line l2) {
+    public Point getCrossingPointInCircle(Line l1, Line l2) {
         List<Point> pointsL1 = l1.getPointList();
         List<Point> pointsL2 = l2.getPointList();
         double xL1 = pointsL1.get(0).getX();
@@ -181,20 +186,24 @@ public class Game {
             double t = (dxL1L2 * dyL2 - dyL1L2 * dxL2) / tDenom;
             double xP = xL1 + t * dxL1;
             double yP = yL1 + t * dyL1;
-            return new Point(xP, yP, crrPointId++, false);
-        } else {
-            return null;
+            if (isCoordInCircle(xP, yP))
+                return new Point(xP, yP, crrPointId++, false);
         }
+        return null;
     }
 
     public boolean isPointInCircle(Point point) {
         return Math.sqrt(point.getX() * point.getX() + point.getY() * point.getY()) < 1.0;
     }
 
+    public boolean isCoordInCircle(double x, double y) {
+        return Math.sqrt(x * x + y * y) < 1.0;
+    }
+
     public void updateCrossingLines(Line line) {
         for (Line l2 : mField.getLines()) {
-            Point crossingPoint = getCrossingPoint(line, l2);
-            if (crossingPoint != null && isPointInCircle(crossingPoint)) {
+            Point crossingPoint = getCrossingPointInCircle(line, l2);
+            if (crossingPoint != null) {
                 line.addPoint(crossingPoint);
                 l2.addPoint(crossingPoint);
                 line.sortPoints();
