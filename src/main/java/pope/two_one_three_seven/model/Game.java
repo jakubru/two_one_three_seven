@@ -17,7 +17,7 @@ public class Game {
 
     public Game(){
         this.mListOfPlayers = new ArrayList<Player>();
-        generateField();
+        generateField(); 
     }
 
     public boolean addPlayer(String nick){
