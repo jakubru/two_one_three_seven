@@ -3,7 +3,7 @@ package pope.two_one_three_seven.model;
 public class Player {
     String mNick;
     boolean mIsActive;
-    int pointID;
+    Point crrPoint;
 
 
     Player(String nick){
@@ -28,11 +28,11 @@ public class Player {
         return mNick;
     }
 
-    public int getPointID(){
-        return this.pointID;
+    public Point getPoint(){
+        return this.crrPoint;
     }
 
-    public void setPointID(int pointID){
-        this.pointID = pointID;
+    public void setPoint(Point point){
+        this.crrPoint = point;
     }
 }

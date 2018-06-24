@@ -11,23 +11,23 @@ public class Game {
     Field mField;
     int crrPointId = 0;
 
-    public Field getField(){
+    public Field getField() {
         return this.mField;
     }
 
-    public Game(){
+    public Game() {
         this.mListOfPlayers = new ArrayList<Player>();
-        generateField(); 
+        generateField();
     }
 
-    public boolean addPlayer(String nick){
-        for(int i = 0; i < mListOfPlayers.size(); i++){
-            if(mListOfPlayers.get(i).getNick().equals(nick))
+    public boolean addPlayer(String nick) {
+        for (int i = 0; i < mListOfPlayers.size(); i++) {
+            if (mListOfPlayers.get(i).getNick().equals(nick))
                 return false;
         }
-        if(mListOfPlayers.size() < 3){
+        if (mListOfPlayers.size() < 3) {
             mListOfPlayers.add(new Player(nick));
-            if(getSize() == 1){
+            if (getSize() == 1) {
                 mListOfPlayers.get(0).activate();
             }
             return true;
@@ -36,26 +36,26 @@ public class Game {
     }
 
 
-    public Player getPlayer(String nick){
-        for(int i = 0; i < mListOfPlayers.size();i++)
-            if(mListOfPlayers.get(i).getNick().equals(nick))
+    public Player getPlayer(String nick) {
+        for (int i = 0; i < mListOfPlayers.size(); i++)
+            if (mListOfPlayers.get(i).getNick().equals(nick))
                 return mListOfPlayers.get(i);
         return null;
     }
 
 
-    public int getSize(){
+    public int getSize() {
         return mListOfPlayers.size();
     }
 
-    public Player getNext(String nick){
-        for(int i = 0; i < mListOfPlayers.size();i++)
-            if(mListOfPlayers.get(i).getNick().equals( nick))
-                return mListOfPlayers.get((i+1)%3);
+    public Player getNext(String nick) {
+        for (int i = 0; i < mListOfPlayers.size(); i++)
+            if (mListOfPlayers.get(i).getNick().equals(nick))
+                return mListOfPlayers.get((i + 1) % 3);
         return null;
     }
 
-    private void generateField(){
+    private void generateField() {
         Circle c = generateCircle();
         mField = new Field(c);
         mField.addLine(generateXLine());
@@ -70,35 +70,54 @@ public class Game {
         }
 
         for (Player player : mListOfPlayers) {
-            player.setPointID(getRandomPointOnCircle().getID());
+            player.setPoint(getRandomPointOnCircle());
         }
         /*W tej funkcji wszystko ustawiane, razem z początkowymi punktami graczy*/
         // chosing the line and its on-circle-point for each player randomly
     }
 
-    private boolean checkNeighbours(int ID){
+    private boolean checkNeighbours(Point point, Player player) {
+        for (Line l : point.getLinesContaingPoint()) {
+            int index = l.getPointList().indexOf(point);
+            if (index == 0 && player.getPoint().equals(l.getPointList().get(index + 1))) {
+                return true;
+            } else if (index == l.getPointList().size() - 1
+                    && player.getPoint().equals(l.getPointList().get(index - 1))){
+                return true;
+            } else {
+                if (player.getPoint().equals(l.getPointList().get(index - 1))
+                        || player.getPoint().equals(l.getPointList().get(index + 1))) {
+                    return true;
+                }
+            }
+            return false;
+        }
         return true;
         /*Funkcja do sprawdzania sąsiadów punktów*/
     }
 
-    private boolean isOccupied(int pointID){
+    private boolean isOccupied(int pointID) {
         boolean flag = false;
-        for(int i = 0; i < mListOfPlayers.size(); i++){
-            if(mListOfPlayers.get(i).getPointID() == pointID){
+        for (Player player : mListOfPlayers) {
+            if (player.getPoint().getID() == pointID)
                 flag = true;
-            }
         }
         return flag;
     }
 
-    public boolean makeMove(String nick, int pointID){
-        if(getPlayer(nick).isActive() && this.checkNeighbours(pointID) && !this.isOccupied(pointID)){
+    public boolean makeMove(String nick, int pointID) {
+        Point point = getPointById(pointID);
+        if (getPlayer(nick).isActive() && this.checkNeighbours(point, getPlayer(nick)) && !this.isOccupied(pointID)) {
             this.getPlayer(nick).deactivate();
-            this.getPlayer(nick).setPointID(pointID);
+            this.getPlayer(nick).setPoint(point);
             this.getNext(nick).activate();
             return true;
         }
         return false;
+    }
+
+    public boolean didWin(Player player) {
+        return player.getPoint().getX() == 0.0 && player.getPoint().getY() == 0.0;
     }
 
     public Circle generateCircle() {
@@ -112,6 +131,8 @@ public class Game {
         Line line = new Line();
         line.addPoint(p1);
         line.addPoint(p2);
+        p1.addLineContaingPoint(line);
+        p2.addLineContaingPoint(line);
         return line;
     }
 
@@ -121,6 +142,8 @@ public class Game {
         Line line = new Line();
         line.addPoint(p1);
         line.addPoint(p2);
+        p1.addLineContaingPoint(line);
+        p2.addLineContaingPoint(line);
         return line;
     }
 
@@ -133,6 +156,8 @@ public class Game {
         Line line = new Line();
         line.addPoint(p1);
         line.addPoint(p2);
+        p1.addLineContaingPoint(line);
+        p2.addLineContaingPoint(line);
         return line;
     }
 
@@ -174,6 +199,8 @@ public class Game {
                 l2.addPoint(crossingPoint);
                 line.sortPoints();
                 l2.sortPoints();
+                crossingPoint.addLineContaingPoint(line);
+                crossingPoint.addLineContaingPoint(l2);
             }
         }
     }
@@ -186,5 +213,16 @@ public class Game {
         List<Point> pointsList = randLine.getPointList();
         if (sideNum == 0) return pointsList.get(0);
         else return pointsList.get(pointsList.size() - 1);
+    }
+
+    public Point getPointById(int pointId) {
+        for (Line l : mField.getLines()) {
+            for (Point p : l.getPointList()) {
+                if (p.getID() == pointId) {
+                    return p;
+                }
+            }
+        }
+        return null;
     }
 }
