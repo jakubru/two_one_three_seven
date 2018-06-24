@@ -15,9 +15,12 @@ public class Game {
         return this.mField;
     }
 
+
+
+
     public Game() {
         this.mListOfPlayers = new ArrayList<Player>();
-        generateField(100);
+        generateField(15);
     }
 
     public Game(int numOfLines) {
@@ -84,7 +87,7 @@ public class Game {
         // chosing the line and its on-circle-point for each player randomly
     }
 
-    private boolean checkNeighbours(Point point, Player player) {
+    /*private boolean checkNeighbours(Point point, Player player) {
         for (Line l : point.getLinesContaingPoint()) {
             int index = l.getPointList().indexOf(point);
             if (index == 0 && player.getPoint().equals(l.getPointList().get(index + 1))) {
@@ -101,8 +104,8 @@ public class Game {
             return false;
         }
         return true;
-        /*Funkcja do sprawdzania sąsiadów punktów*/
-    }
+        Funkcja do sprawdzania sąsiadów punktów
+    }*/
 
     private boolean isOccupied(int pointID) {
         boolean flag = false;
@@ -115,7 +118,7 @@ public class Game {
 
     public boolean makeMove(String nick, int pointID) {
         Point point = getPointById(pointID);
-        if (getPlayer(nick).isActive() && this.checkNeighbours(point, getPlayer(nick)) && !this.isOccupied(pointID)) {
+        if (getPlayer(nick).isActive() &&/* this.checkNeighbours(point, getPlayer(nick)) &&*/ !this.isOccupied(pointID)) {
             this.getPlayer(nick).deactivate();
             this.getPlayer(nick).setPoint(point);
             this.getNext(nick).activate();
@@ -139,8 +142,8 @@ public class Game {
         Line line = new Line();
         line.addPoint(p1);
         line.addPoint(p2);
-        p1.addLineContaingPoint(line);
-        p2.addLineContaingPoint(line);
+        //p1.addLineContaingPoint(line);
+        //p2.addLineContaingPoint(line);
         return line;
     }
 
@@ -150,8 +153,8 @@ public class Game {
         Line line = new Line();
         line.addPoint(p1);
         line.addPoint(p2);
-        p1.addLineContaingPoint(line);
-        p2.addLineContaingPoint(line);
+        //p1.addLineContaingPoint(line);
+        //p2.addLineContaingPoint(line);
         return line;
     }
 
@@ -164,8 +167,8 @@ public class Game {
         Line line = new Line();
         line.addPoint(p1);
         line.addPoint(p2);
-        p1.addLineContaingPoint(line);
-        p2.addLineContaingPoint(line);
+        //p1.addLineContaingPoint(line);
+        //p2.addLineContaingPoint(line);
         return line;
     }
 
@@ -211,8 +214,8 @@ public class Game {
                 l2.addPoint(crossingPoint);
                 line.sortPoints();
                 l2.sortPoints();
-                crossingPoint.addLineContaingPoint(line);
-                crossingPoint.addLineContaingPoint(l2);
+                //crossingPoint.addLineContaingPoint(line);
+                //crossingPoint.addLineContaingPoint(l2);
             }
         }
     }
@@ -237,4 +240,5 @@ public class Game {
         }
         return null;
     }
+
 }

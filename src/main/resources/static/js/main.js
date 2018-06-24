@@ -113,7 +113,6 @@ function play () {
                 gameMenu.style.display = "none";
             }
             startGame();
-            //getField();
     }
     else{
         alert("nie ok");
@@ -140,10 +139,10 @@ async function startGame(){
         if (resp === "true") {
             loader.style.display="none";
             field.style.display="block";
+            getField();
             return;
         }
         await sleep(1000);
-
     }
 }
 
@@ -152,25 +151,33 @@ function sleep(ms) {
 }
 
 function getField(){
-    var field = JSON.parse(httpPost("/getField"));
+    var field = httpPost("/getField");
+    field = JSON.parse(field);
     drawField(field);
 }
 
 function drawField(field){
-    drawCircle(field.circle.mid.x,field.circle.mid.y,field.circle.radius);
+    drawCircle(getScaledShiftedX(200,500,field.circle.mid.x),getScaledShiftedY(200,500,field.circle.mid.y),scaledR(200,field.circle.radius));
     for(line in field.lines){
-        p1 = -1;
-        p2 = -1;
-        for(point in lines.pointList){
-            if(point.onCircle === "true" && p1 === -1){
-                p1 = point
+        var i = 0;
+        var p1;
+        var p2;
+        for(point in line.pointList){
+            if(point.onCircle){
+                p1 = point;
+                p2 = point;
+                i++;
             }
-            else if(point.onCircle === "true"){
-                p2 = point
+            if(point.onCircle){
+                p2 = point;
             }
+            console.log("other loop");
         }
-        drawLine(p1.x, p1.y,p2.x,p2.y);
+        console.log("ok");
+        //drawLine(getScaledShiftedX(200,500,p1.x), getScaledShiftedY(200,500,p1.y),getScaledShiftedX(200,500,p2.x),getScaledShiftedY(200,500,p2.y));
     }
+    /*var c=document.getElementById("myCanvas");
+    c.addEventListener("",getP);*/
 }
 
 function drawLine(x1,y1,x2,y2){
@@ -188,6 +195,20 @@ function drawCircle(x,y,r){
     ctx.beginPath();
     ctx.arc(x,y,r,0,2*Math.PI);
     ctx.stroke();
+}
+
+function getScaledShiftedX(scale, xShift, x) {
+    var scaledX = x * scale;
+    return Math.ceil(scaledX + xShift);
+}
+
+function getScaledShiftedY(scale, yShift, y) {
+    var scaledY = y * scale;
+    return Math.ceil(scaledY + yShift);
+}
+
+function scaledR(scale, radius) {
+    return Math.ceil(radius * scale);
 }
 
 $(".button-collapse").sideNav();

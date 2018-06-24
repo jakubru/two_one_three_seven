@@ -11,14 +11,14 @@ public class Point {
     double y;
     int ID;
     boolean isOnCircle;
-    List<Line> linesContaingPoint;
+    //List<Line> linesContaingPoint;
 
     public Point(double x, double y, int ID, boolean isOnCircle) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.isOnCircle = isOnCircle;
-        this.linesContaingPoint = new ArrayList<>();
+        //this.linesContaingPoint = new ArrayList<>();
     }
 
     public double getX() {
@@ -37,13 +37,13 @@ public class Point {
         return isOnCircle;
     }
 
-    public List<Line> getLinesContaingPoint() {
-        return linesContaingPoint;
-    }
+    //public List<Line> getLinesContaingPoint() {
+        //return linesContaingPoint;
+    //}
 
-    public void addLineContaingPoint(Line line) {
-        linesContaingPoint.add(line);
-    }
+    //public void addLineContaingPoint(Line line) {
+      //  linesContaingPoint.add(line);
+    //}
 
     public int getScaledShiftedX(int scale, int xShift) {
         long scaledX = round(x * (double) scale);
