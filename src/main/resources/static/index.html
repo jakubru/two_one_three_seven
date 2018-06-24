@@ -90,9 +90,17 @@
                         </div>
                     </div>
                     <br>
-                    <button class="btn waves-effect waves-light" type="button" onclick="play()">Play
-                        <i class="material-icons right">send</i>
-                    </button>
+                    <div class="nick-input" id="game-nick-input">
+                        <p>Choose nick: <input type="text" id="nick"></p>
+                        <button class="btn waves-effect waves-light" type="button" onclick="play()">Play
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                    <div class="field" id="game-field">
+                        <canvas height="1000" width="1000" id="myCanvas">
+
+                        </canvas>
+                    </div>
                 </div>
             </div>
         </div>

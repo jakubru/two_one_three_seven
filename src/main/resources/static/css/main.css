@@ -24,6 +24,17 @@ body {
     width: 400px;
     height: 400px;
 }
+
+#play .field {
+    display: none;
+    width: 1000px;
+    height: 1000px;
+}
+
+#play .nick-input {
+    display: block;
+}
+
 #main {
     padding-top: 70px;
 }

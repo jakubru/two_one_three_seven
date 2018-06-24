@@ -94,18 +94,88 @@ function logout () {
 }
 
 function play () {
+    var nick = document.getElementById("nick").value;
+    var resp = httpPost("/addPlayer", "nick=" + nick);
     var loader = document.getElementById("game-loader");
+    var input = document.getElementById("game-nick-input");
     var gameMenu = document.getElementById("game-menu");
-    if ( loader.style.display === "block") {
-        loader.style.display = "none";
-    } else {
-        loader.style.display = "block";
+    if(resp === "true"){
+        if ( loader.style.display === "block") {
+            loader.style.display = "none";}
+            else {
+                loader.style.display = "block";
+                input.style.display ="none";
+            }
+            if ( gameMenu.style.display === "none") {
+                gameMenu.style.display = "block";
+
+            } else {
+                gameMenu.style.display = "none";
+            }
+            startGame();
+            getField();
     }
-    if ( gameMenu.style.display === "none") {
-        gameMenu.style.display = "block";
-    } else {
-        gameMenu.style.display = "none";
+    else{
+        alert("nie ok");
     }
 }
+
+function httpPost(url, params){
+    var http = new XMLHttpRequest();
+    http.open('POST', url, false);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    http.send(params);
+    return http.responseText;
+}
+
+
+async function startGame(){
+    while(true) {
+        var resp = httpPost("/startGame");
+        var loader = document.getElementById("game-loader");
+        var field = document.getElementById("game-field");
+        console.log(resp);
+        if (resp === "true") {
+            loader.style.display="none";
+            field.style.display="block";
+            return;
+        }
+        await sleep(1000);
+
+    }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function getField(){
+    var field = JSON.parse(httpPost("/getField"));
+    drawField(field);
+}
+
+function drawField(field){
+    drawCircle(100,100,100);
+}
+
+function drawLine(x1,y1,x2,y2){
+    var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+}
+
+function drawCircle(x,y,r){
+    var c= document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(x,y,r,0,2*Math.PI);
+    ctx.stroke();
+}
+
 $(".button-collapse").sideNav();
 
