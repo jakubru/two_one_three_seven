@@ -20,7 +20,6 @@ public class Game {
         generateField();
     }
 
-
     public boolean addPlayer(String nick){
         for(int i = 0; i < mListOfPlayers.size(); i++){
             if(mListOfPlayers.get(i).getNick().equals(nick))
