@@ -2,6 +2,10 @@ var nick;
 var field;
 var players;
 var canvasField;
+const ENEMY_COLOUR = "red";
+const ALLY_COLOUR = "green";
+const POST_MOVE_COLOUR = "black";
+const PLAYER_SIZE = 15;
 
 function play() {
     nick = document.getElementById("nick").value;
@@ -50,7 +54,7 @@ async function startGame() {
         if (resp === "true") {
             loader.style.display = "none";
             field.style.display = "block";
-            canvasField = document.getElementById("myCanvas")
+            canvasField = document.getElementById("myCanvas");
             getPlayers();
             getField();
             updatePlayers();
@@ -62,9 +66,25 @@ async function startGame() {
 
 function updatePlayers() {
     setInterval(function () {
+        let currPlayers = players;
         getPlayers();
-        drawPlayers();
-    }, 1000)
+        checkPlayers(currPlayers);
+    }, 2000)
+}
+
+function checkPlayers(old) {
+    for (i = 0; i < players.length; i++) {
+        if (!(old[i].point.x === players[i].point.x && old[i].point.y === players[i].point.y)) {
+            if (players[i].nick === nick) {
+                drawCircle(getScaledShiftedX(400, 500, players[i].point.x), getScaledShiftedY(400, 500, players[i].point.y), PLAYER_SIZE, ALLY_COLOUR);
+            } else {
+                drawCircle(getScaledShiftedX(400, 500, players[i].point.x), getScaledShiftedY(400, 500, players[i].point.y), PLAYER_SIZE, ENEMY_COLOUR);
+            }
+            drawCircle(getScaledShiftedX(400, 500, old[i].point.x), getScaledShiftedY(400, 500, old[i].point.y), PLAYER_SIZE, POST_MOVE_COLOUR);
+            console.log("rysuję - check");
+        }
+        console.log("nie rysuję - check");
+    }
 }
 
 
@@ -105,9 +125,9 @@ function drawField() {
 function drawPlayers() {
     for (i = 0; i < players.length; i++) {
         if (players[i].nick === nick) {
-            drawCircle(getScaledShiftedX(400, 500, players[i].point.x), getScaledShiftedY(400, 500, players[i].point.y), 10, "red");
+            drawCircle(getScaledShiftedX(400, 500, players[i].point.x), getScaledShiftedY(400, 500, players[i].point.y), PLAYER_SIZE, ALLY_COLOUR);
         } else {
-            drawCircle(getScaledShiftedX(400, 500, players[i].point.x), getScaledShiftedY(400, 500, players[i].point.y), 10, "black");
+            drawCircle(getScaledShiftedX(400, 500, players[i].point.x), getScaledShiftedY(400, 500, players[i].point.y), PLAYER_SIZE, ENEMY_COLOUR);
         }
         console.log("narysowany")
     }
