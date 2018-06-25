@@ -7,16 +7,16 @@ public class Circle {
     Point mid;
     double radius;
 
-    public Circle(Point p, double k){
+    public Circle(Point p, double k) {
         this.mid = p;
         this.radius = k;
     }
 
-    public Point getMid(){
+    public Point getMid() {
         return this.mid;
     }
 
-    public double getRadius(){
+    public double getRadius() {
         return this.radius;
     }
 

@@ -1,29 +1,32 @@
-package pope.two_one_three_seven.model;
+package pope.two_one_three_seven.controller;
+
+import org.springframework.stereotype.Controller;
+import pope.two_one_three_seven.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static java.lang.Math.PI;
-
-public class Game {
-    List<Player> mListOfPlayers;
+@Controller
+public class GameController {
+    public List<Player> mListOfPlayers;
     Field mField;
     int crrPointId = 0;
 
-    public Field getField() {
-        return this.mField;
-    }
-
-
-    public Game() {
+    public GameController() {
         this.mListOfPlayers = new ArrayList<Player>();
         generateField(15);
     }
 
-    public Game(int numOfLines) {
+
+    public GameController(int numOfLines) {
         this.mListOfPlayers = new ArrayList<Player>();
         generateField(numOfLines);
+    }
+
+    public Field getField() {
+        return this.mField;
     }
 
     public boolean addPlayer(String nick) {
@@ -103,7 +106,7 @@ public class Game {
             if (index == 0 && player.getPoint().equals(l.getPointList().get(index + 1))) {
                 return true;
             } else if (index == l.getPointList().size() - 1
-                    && player.getPoint().equals(l.getPointList().get(index - 1))){
+                    && player.getPoint().equals(l.getPointList().get(index - 1))) {
                 return true;
             } else {
                 if (player.getPoint().equals(l.getPointList().get(index - 1))
@@ -239,7 +242,7 @@ public class Game {
         return null;
     }
 
-    public List<Player> getListOfPlayers(){
+    public List<Player> getListOfPlayers() {
         return this.mListOfPlayers;
     }
 }

@@ -6,33 +6,33 @@ public class Player {
     Point crrPoint;
 
 
-    Player(String nick){
+    public Player(String nick) {
         this.mNick = nick;
         mIsActive = false;
     }
 
-    public void deactivate(){
+    public void deactivate() {
         mIsActive = false;
     }
 
-    public void activate(){
+    public void activate() {
         mIsActive = true;
     }
 
 
-    public boolean isActive(){
+    public boolean isActive() {
         return mIsActive;
     }
 
-    public String getNick(){
+    public String getNick() {
         return mNick;
     }
 
-    public Point getPoint(){
+    public Point getPoint() {
         return this.crrPoint;
     }
 
-    public void setPoint(Point point){
+    public void setPoint(Point point) {
         this.crrPoint = point;
     }
 }
