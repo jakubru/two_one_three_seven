@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pope.two_one_three_seven.model.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -44,5 +45,12 @@ public class MappingController {
     @ResponseBody
     public Field getField(){
         return this.mGame.getField();
+    }
+
+
+    @RequestMapping(value = "/getPlayers", method = RequestMethod.POST, produces = {"application/json"})
+    @ResponseBody
+    public List<Player> getPlayers(){
+        return this.mGame.getListOfPlayers();
     }
 }

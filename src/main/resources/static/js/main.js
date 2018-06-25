@@ -93,8 +93,10 @@ function logout () {
     localStorage.removeItem( 'profile' );
 }
 
+var nick;
+
 function play () {
-    var nick = document.getElementById("nick").value;
+    nick = document.getElementById("nick").value;
     var resp = httpPost("/addPlayer", "nick=" + nick);
     var loader = document.getElementById("game-loader");
     var input = document.getElementById("game-nick-input");
@@ -139,6 +141,7 @@ async function startGame(){
         if (resp === "true") {
             loader.style.display="none";
             field.style.display="block";
+            getPlayers();
             getField();
             return;
         }
@@ -150,34 +153,44 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+
+var field;
+var players;
+
+
 function getField(){
-    var field = httpPost("/getField");
+    field = httpPost("/getField");
     field = JSON.parse(field);
     drawField(field);
 }
 
-function drawField(field){
-    drawCircle(getScaledShiftedX(200,500,field.circle.mid.x),getScaledShiftedY(200,500,field.circle.mid.y),scaledR(200,field.circle.radius));
-    for(line in field.lines){
-        var i = 0;
+
+
+function drawField(){
+    drawCircle(getScaledShiftedX(400,500,field.circle.mid.x),getScaledShiftedY(400,500,field.circle.mid.y),scaledR(400,field.circle.radius));
+    for(i = 0; i < field.lines.length; i++){
         var p1;
         var p2;
-        for(point in line.pointList){
-            if(point.onCircle){
+        line = field.lines[i];
+        var k = 0;
+        for(j = 0; j < line.pointList.length; j++){
+            point = line.pointList[j];
+            if(point.onCircle && k == 0){
                 p1 = point;
-                p2 = point;
-                i++;
+                k++;
             }
-            if(point.onCircle){
+            else if(point.onCircle){
                 p2 = point;
             }
-            console.log("other loop");
         }
-        console.log("ok");
-        //drawLine(getScaledShiftedX(200,500,p1.x), getScaledShiftedY(200,500,p1.y),getScaledShiftedX(200,500,p2.x),getScaledShiftedY(200,500,p2.y));
+        drawLine(getScaledShiftedX(400,500,p1.x), getScaledShiftedY(400,500,p1.y),getScaledShiftedX(400,500,p2.x),getScaledShiftedY(400,500,p2.y));
     }
-    /*var c=document.getElementById("myCanvas");
-    c.addEventListener("",getP);*/
+    for(i = 0; i < players.length; i++){
+        drawCircle(getScaledShiftedX(400,500,players[i].point.x),getScaledShiftedY(400,500,players[i].point.y), 10);
+        console.log("narysowany")
+    }
+    var c=document.getElementById("myCanvas");
+    c.addEventListener("click",move);
 }
 
 function drawLine(x1,y1,x2,y2){
@@ -202,6 +215,10 @@ function getScaledShiftedX(scale, xShift, x) {
     return Math.ceil(scaledX + xShift);
 }
 
+
+
+
+
 function getScaledShiftedY(scale, yShift, y) {
     var scaledY = y * scale;
     return Math.ceil(scaledY + yShift);
@@ -209,6 +226,38 @@ function getScaledShiftedY(scale, yShift, y) {
 
 function scaledR(scale, radius) {
     return Math.ceil(radius * scale);
+}
+
+function move(e){
+    console.log(e);
+    httpPost("/move","nick=" + nick + "&pointID=" + getNearest(e.offsetX,e.offsetY));
+}
+
+function distance(x1,y1,x2,y2){
+    var a = x1 - x2;
+    var b = y1 - y2;
+    return Math.sqrt( a*a + b*b );
+}
+
+function getPlayers(){
+    players = JSON.parse(httpPost("/getPlayers",""));
+}
+
+function getNearest(x,y){
+    var pointID = 0;
+    var dist = 1000;
+    for(i = 0; i < field.lines.length; i++){
+        pointList = field.lines[i].pointList;
+        for(j = 0 ; j < pointList.length; j++){
+            a = distance(x,y,getScaledShiftedX(400, 500, pointList[j].x),getScaledShiftedY(400, 500,pointList[j].y));
+            if(a < dist){
+                dist = a;
+                pointID = pointList[j].id;
+                console.log("ok");
+            }
+        }
+    }
+    return pointID;
 }
 
 $(".button-collapse").sideNav();
