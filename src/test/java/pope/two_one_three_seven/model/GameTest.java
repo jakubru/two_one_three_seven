@@ -2,6 +2,10 @@ package pope.two_one_three_seven.model;
 
 import org.junit.Assert;
 
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * Created by esromic on 2018-06-24.
  */
@@ -64,7 +68,7 @@ public class GameTest {
         game.addPlayer("ewa");
         game.addPlayer("kuku");
         game.generateField(10);
-        for (Line l: game.getField().getLines()) {
+        for (Line l : game.getField().getLines()) {
             System.out.println("Line:");
             l.printPoints();
         }
@@ -76,4 +80,5 @@ public class GameTest {
                     + p.getPoint().getY() * p.getPoint().getY()));
         }
     }
+
 }

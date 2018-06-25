@@ -16,8 +16,6 @@ public class Game {
     }
 
 
-
-
     public Game() {
         this.mListOfPlayers = new ArrayList<Player>();
         generateField(15);
@@ -80,15 +78,27 @@ public class Game {
             mField.addLine(randLine);
         }
 
-        for (Player player : mListOfPlayers) {
+        /*for (Player player : mListOfPlayers) {
             player.setPoint(getRandomPointOnCircle());
         }
         /*W tej funkcji wszystko ustawiane, razem z początkowymi punktami graczy*/
         // chosing the line and its on-circle-point for each player randomly
     }
 
+    public boolean makeMove(String nick, int pointID) {
+        Point point = getPointById(pointID);
+        if (getPlayer(nick).isActive() && this.checkNeighbours(point, getPlayer(nick)) && !this.isOccupied(pointID)) {
+            this.getPlayer(nick).deactivate();
+            this.getPlayer(nick).setPoint(point);
+            this.getNext(nick).activate();
+            return true;
+        }
+        return false;
+    }
+
     private boolean checkNeighbours(Point point, Player player) {
-        for (Line l : point.getLinesContaingPoint()) {
+        List<Line> linesContPoint = point.getLinesContaingPoint();
+        for (Line l : linesContPoint) {
             int index = l.getPointList().indexOf(point);
             if (index == 0 && player.getPoint().equals(l.getPointList().get(index + 1))) {
                 return true;
@@ -101,9 +111,8 @@ public class Game {
                     return true;
                 }
             }
-            return false;
         }
-        return true;
+        return false;
         //Funkcja do sprawdzania sąsiadów punktów
     }
 
@@ -114,17 +123,6 @@ public class Game {
                 flag = true;
         }
         return flag;
-    }
-
-    public boolean makeMove(String nick, int pointID) {
-        Point point = getPointById(pointID);
-        if (getPlayer(nick).isActive() && this.checkNeighbours(point, getPlayer(nick)) && !this.isOccupied(pointID)) {
-            this.getPlayer(nick).deactivate();
-            this.getPlayer(nick).setPoint(point);
-            this.getNext(nick).activate();
-            return true;
-        }
-        return false;
     }
 
     public boolean didWin(Player player) {
