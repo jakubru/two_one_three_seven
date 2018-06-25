@@ -18,7 +18,7 @@ public class Game {
 
     public Game() {
         this.mListOfPlayers = new ArrayList<Player>();
-        generateField(15);
+        generateField(30);
     }
 
     public Game(int numOfLines) {
