@@ -28,6 +28,7 @@ function play() {
             gameMenu.style.display = "none";
         }
         startGame();
+
     }
     else {
         alert("nie ok");
@@ -58,18 +59,21 @@ async function startGame() {
             getPlayers();
             getField();
             updatePlayers();
+            isEnd();
             return;
         }
         await sleep(1000);
     }
 }
 
-function updatePlayers() {
-    setInterval(function () {
+async function updatePlayers() {
+    while(true){
         let currPlayers = players;
         getPlayers();
         checkPlayers(currPlayers);
-    }, 2000)
+        isEnd();
+        await sleep(1000);
+    }
 }
 
 function checkPlayers(old) {
@@ -87,6 +91,17 @@ function checkPlayers(old) {
     }
 }
 
+function isEnd(){
+        var field = document.getElementById("game-field");
+        var over = document.getElementById("game-over");
+        for(i = 0; i < players.length; i++){
+            console.log(players[i]);
+            if(players[i].point.x ==0 && players[i].point.y ==0){
+                field.style.display = "none";
+                over.style.display = "block";
+            }
+        }
+}
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
