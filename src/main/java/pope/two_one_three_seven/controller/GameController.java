@@ -16,7 +16,7 @@ public class GameController {
 
     public GameController() {
         this.mListOfPlayers = new ArrayList<Player>();
-        generateField(30);
+        generateField(20);
     }
 
 
@@ -244,5 +244,9 @@ public class GameController {
 
     public List<Player> getListOfPlayers() {
         return this.mListOfPlayers;
+    }
+
+    public void clear() {
+        mListOfPlayers.clear();
     }
 }

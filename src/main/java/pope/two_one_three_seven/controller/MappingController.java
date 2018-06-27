@@ -59,4 +59,11 @@ public class MappingController {
     public List<Player> getPlayers() {
         return this.mGame.getListOfPlayers();
     }
+
+    @RequestMapping (value="/end", method = RequestMethod.POST)
+    @ResponseBody
+    public void end() {
+        mGame.clear();
+    }
+
 }

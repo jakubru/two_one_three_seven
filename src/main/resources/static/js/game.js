@@ -96,11 +96,16 @@ function isEnd(){
         var over = document.getElementById("game-over");
         for(i = 0; i < players.length; i++){
             console.log(players[i]);
-            if(players[i].point.x ==0 && players[i].point.y ==0){
+            if(players[i].point.x === 0 && players[i].point.y ===0){
                 field.style.display = "none";
+                var gameMenu = document.getElementById("game-menu");
+                gameMenu.style.display = "block";
                 over.style.display = "block";
+                //httpPost("/end");
             }
         }
+
+
 }
 
 function sleep(ms) {
